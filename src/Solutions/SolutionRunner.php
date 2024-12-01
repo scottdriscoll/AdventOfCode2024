@@ -2,32 +2,25 @@
 
 namespace App\Solutions;
 
-use Psr\Container\ContainerInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
 
-class SolutionRunner
+readonly class SolutionRunner
 {
     public function __construct(
         #[AutowireLocator(SolutionInterface::class)]
-        private ContainerInterface $solutions,
+        private iterable $solutions,
     ) {
     }
 
-    public function run(int $day, int $part, string $inputData, SymfonyStyle $io): void
+    public function run(int $day, int $part, string $inputData): int
     {
-        $tag = sprintf('day-%s-part-%s', $day, $part);
+        /** @var SolutionInterface $solution */
+        $solution = $this->solutions->get(sprintf('day-%s', $day));
 
-        if (!$this->solutions->has($tag)) {
-            $io->error("Solution with tag $tag does not exist");
-
-            return;
+        if ($part === 1) {
+            return $solution->part1($inputData);
         }
 
-        $io->info("Running Day $day Part $part.");
-
-        $output = $this->solutions->get($tag)->run($inputData);
-
-        $io->writeln($output);
+        return $solution->part2($inputData);
     }
 }

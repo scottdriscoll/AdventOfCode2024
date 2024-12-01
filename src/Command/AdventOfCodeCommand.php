@@ -37,9 +37,13 @@ class AdventOfCodeCommand extends Command
         $day = (int) $input->getArgument('day');
         $part = (int) $input->getArgument('part');
 
-        $input = file_get_contents(__DIR__ . "/../Solutions/Day$day/part$part.txt");
+        $io->info("Running $day $part...");
 
-        $this->runner->run($day, $part, $input, $io);
+        $input = file_get_contents(__DIR__ . "/../Solutions/day$day.txt");
+
+        $result = $this->runner->run($day, $part, $input);
+
+        $io->success($result);
 
         return Command::SUCCESS;
     }

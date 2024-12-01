@@ -8,7 +8,7 @@
 /public/bundles/
 /var/
 /vendor/
-/src/Solutions/Day*/*.txt
+/src/Solutions/*.txt
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
