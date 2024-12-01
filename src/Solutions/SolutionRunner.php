@@ -9,7 +9,7 @@ readonly class SolutionRunner
 {
     public function __construct(
         #[AutowireLocator(SolutionInterface::class)]
-        private ServiceCollectionInterface $solutions,
+        private iterable $solutions,
     ) {
     }
 
