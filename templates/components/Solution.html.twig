@@ -1,5 +1,5 @@
 <div{{ attributes }}>
-    <div class="bg-gray-200 p-4 rounded-lg">
+    <div class="bg-gray-200 p-4 rounded-lg" data-controller="solution">
         <h3 class="text-lg font-semibold mb-2">Day {{ day }}</h3>
         <div class="flex mb-2">
             <textarea
@@ -8,12 +8,18 @@
                 data-model="input"
                 aria-label="Input for Day {{ day }}"
             ></textarea>
-            <div class="w-1/2 bg-gray-200 p-2" aria-label="Output for Day {{ day }}">{{ this.output }}</div>
+            <div
+                class="w-1/2 bg-gray-200 p-2"
+                aria-label="Output for Day {{ day }}"
+                data-solution-target="output"
+            >
+                {{ this.output }}
+            </div>
         </div>
         <div class="flex space-x-2">
             <button
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                data-action="live#action"
+                data-action="solution#loading live#action"
                 data-live-action-param="run"
                 data-live-part-param="1"
                 aria-label="Run Day {{ day }} Part 1"
@@ -22,7 +28,7 @@
             </button>
             <button
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                data-action="live#action"
+                data-action="solution#loading live#action"
                 data-live-action-param="run"
                 data-live-part-param="2"
                 aria-label="Run Day {{ day }} Part 2"
