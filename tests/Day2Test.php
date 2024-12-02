@@ -21,10 +21,8 @@ class Day2Test extends TestCase
         $this->assertSame(2, $this->day2->part1($this->input));
     }
 
-    /*
     public function testPart2(): void
     {
-//        $this->assertSame(31, $this->day2->part2($this->input));
+        $this->assertSame(4, $this->day2->part2($this->input));
     }
-    */
 }
