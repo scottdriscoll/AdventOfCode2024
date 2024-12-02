@@ -1,5 +1,7 @@
 Advent of Code 2024
 
+Playing with Symfony UX, Live Components, Stimulus, Tagged services, etc.
+
 First run `composer install`
 
 Run in a console command with `bin/console aoc <day> <part>` You first have to copy your input to `src/Solutions/day{$day}.txt`

@@ -15,7 +15,6 @@ final class Solution
     use DefaultActionTrait;
 
     public function __construct(
-        private readonly SolutionRunner $runner,
         #[LiveProp] public int $day = 0,
         #[LiveProp(writable: true)] public string $input = '',
         #[LiveProp] public string $output = ''
@@ -23,13 +22,13 @@ final class Solution
     }
 
     #[LiveAction]
-    public function run(#[LiveArg] int $part)
+    public function run(#[LiveArg] int $part, SolutionRunner $runner): void
     {
         if (empty($this->input)) {
             $this->output = "Enter your input first";
 
         } else {
-            $this->output = $this->runner->run($this->day, $part, $this->input);
+            $this->output = $runner->run($this->day, $part, $this->input);
         }
     }
 }
