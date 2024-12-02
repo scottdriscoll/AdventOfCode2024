@@ -7,6 +7,11 @@ use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 #[AsTaggedItem('day-1', 50)]
 class Day1 implements SolutionInterface
 {
+    public static function getDay(): int
+    {
+        return 1;
+    }
+
     public function part1(string $input): int
     {
         $firstArray = [];
