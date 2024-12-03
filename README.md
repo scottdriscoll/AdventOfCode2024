@@ -1,5 +1,7 @@
 Advent of Code 2024
 
+![CI](https://github.com/scottdriscoll/AdventOfCode2024/actions/workflows/php.yml/badge.svg)
+
 Playing with Symfony UX, Live Components, Stimulus, Tagged services, etc.
 
 First run

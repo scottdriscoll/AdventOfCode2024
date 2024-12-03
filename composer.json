@@ -1,6 +1,8 @@
 {
+    "name": "scott/aoc2024",
+    "description": "Advent of Code 2024",
     "type": "project",
-    "license": "proprietary",
+    "license": "MIT",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
@@ -20,12 +22,12 @@
         "symfony/ux-twig-component": "^2.22",
         "symfony/yaml": "7.2.*",
         "symfonycasts/tailwind-bundle": "^0.6.1",
-        "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/extra-bundle": "^2.12|^3.16",
+        "twig/twig": "^2.12|^3.16"
     },
     "require-dev": {
-        "phpstan/phpstan": "^2.0",
-        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^2.0.3",
+        "phpunit/phpunit": "^9.6.21",
         "symfony/browser-kit": "7.2.*",
         "symfony/css-selector": "7.2.*",
         "symfony/maker-bundle": "^1.61",
@@ -71,6 +73,9 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "test": [
+            "phpunit --testdox tests"
         ]
     },
     "conflict": {
