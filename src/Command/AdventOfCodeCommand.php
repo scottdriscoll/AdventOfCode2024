@@ -43,7 +43,7 @@ class AdventOfCodeCommand extends Command
 
         $result = $this->runner->run($day, $part, $input);
 
-        $io->success($result);
+        $io->success((string) $result);
 
         return Command::SUCCESS;
     }

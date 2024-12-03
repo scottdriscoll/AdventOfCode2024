@@ -10,6 +10,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class DefaultController extends AbstractController
 {
+    /**
+     * @param array<string, SolutionInterface> $solutions
+     */
     #[Route('/', name: 'app_default')]
     public function index(
         #[TaggedIterator(SolutionInterface::class)]

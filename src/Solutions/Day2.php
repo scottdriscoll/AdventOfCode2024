@@ -52,12 +52,15 @@ class Day2 implements SolutionInterface
         return $answer;
     }
 
+    /**
+     * @param array<int, string> $values
+     */
     private function isRowSafe(array $values): bool
     {
         $count = count($values);
         $increasing = $values[1] > $values[0];
         for ($i = 1; $i < $count; $i++) {
-            if (!$this->isSafe($values[$i], $values[$i - 1], $increasing)) {
+            if (!$this->isSafe((int)$values[$i], (int)$values[$i - 1], $increasing)) {
                 return false;
             }
         }

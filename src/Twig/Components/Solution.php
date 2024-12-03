@@ -28,7 +28,7 @@ final class Solution
             $this->output = "Enter your input first";
 
         } else {
-            $this->output = $runner->run($this->day, $part, $this->input);
+            $this->output = (string) $runner->run($this->day, $part, $this->input);
         }
     }
 }

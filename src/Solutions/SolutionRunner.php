@@ -2,14 +2,14 @@
 
 namespace App\Solutions;
 
+use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
-use Symfony\Contracts\Service\ServiceCollectionInterface;
 
 readonly class SolutionRunner
 {
     public function __construct(
         #[AutowireLocator(SolutionInterface::class)]
-        private iterable $solutions,
+        private ContainerInterface $solutions,
     ) {
     }
 
