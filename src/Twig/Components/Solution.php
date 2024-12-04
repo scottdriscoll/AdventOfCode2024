@@ -17,18 +17,21 @@ final class Solution
     public function __construct(
         #[LiveProp] public int $day = 0,
         #[LiveProp(writable: true)] public string $input = '',
-        #[LiveProp] public string $output = ''
+        #[LiveProp] public string $output = '',
+        #[LiveProp] public string $timing = '',
     ) {
     }
 
     #[LiveAction]
     public function run(#[LiveArg] int $part, SolutionRunner $runner): void
     {
-        if (empty($this->input)) {
-            $this->output = "Enter your input first";
-
+        if (!empty($this->input)) {
+            $model = $runner->run($this->day, $part, $this->input);
+            $this->output = (string) $model->answer;
+            $this->timing = $model->timing;
         } else {
-            $this->output = (string) $runner->run($this->day, $part, $this->input);
+            $this->output = 'Enter your input first.';
+            $this->timing = '';
         }
     }
 }

@@ -37,6 +37,9 @@ class Day4 implements SolutionInterface
         return $answer;
     }
 
+    /**
+     * @param list<list<string>> $words
+     */
     private function getCount(int $col, int $row, int $size, array $words): int
     {
         $count = 0;
@@ -111,12 +114,15 @@ class Day4 implements SolutionInterface
         return $answer;
     }
 
+    /**
+     * @param list<list<string>> $words
+     */
     private function getXMasCount(int $col, int $row, int $size, array $words): bool
     {
         // We need an M and S at opposite corners
         // First check boundaries
         if ($col + 1 >= $size || $col - 1 < 0 || $row + 1 >= $size || $row - 1 < 0) {
-            return 0;
+            return false;
         }
 
         if (
