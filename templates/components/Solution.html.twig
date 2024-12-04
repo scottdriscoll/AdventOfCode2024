@@ -18,7 +18,16 @@
                         class="flex items-center justify-between bg-gray-300 rounded shadow-md drop-shadow"
                         data-controller="clipboard"
                     >
-                        <span class="ml-2" data-clipboard-target="source">{{ output }}</span>
+                        <span
+                            class="ml-2"
+                            data-clipboard-target="source"
+                            data-controller="animated-number"
+                            data-animated-number-start-value="0"
+                            data-animated-number-end-value="{{ output }}"
+                            data-animated-number-duration-value="250"
+                        >
+                            0
+                        </span>
                         <button class="ml-4 bg-gray-300 hover:bg-gray-400 text-black text-sm font-bold py-1 px-1 rounded" data-action="clipboard#copy">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M8 4v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7.242a2 2 0 0 0-.602-1.43L16.083 2.57A2 2 0 0 0 14.685 2H10a2 2 0 0 0-2 2"/><path d="M16 18v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h2"/></g></svg>
                         </button>

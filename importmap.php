@@ -25,4 +25,7 @@ return [
     '@symfony/ux-live-component' => [
         'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
     ],
+    '@stimulus-components/animated-number' => [
+        'version' => '5.0.0',
+    ],
 ];
