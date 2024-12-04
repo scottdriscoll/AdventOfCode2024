@@ -30,7 +30,7 @@ final class Solution
             $this->output = (string) $model->answer;
             $this->timing = $model->timing;
         } else {
-            $this->output = 'Enter your input first.';
+            $this->output = '';
             $this->timing = '';
         }
     }
