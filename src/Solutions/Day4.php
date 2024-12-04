@@ -87,29 +87,49 @@ class Day4 implements SolutionInterface
     public function part2(string $input): int
     {
         $answer = 0;
+        $words = [];
+        foreach (explode("\n", $input) as $line) {
+            $words[] = str_split($line);
+        }
+
+        // Fortunately, input is a perfect square.
+        $size = count($words[0]);
+
+        // Let's look for every A and just search around it
+        for ($row = 0; $row < $size; $row++) {
+            for ($col = 0; $col < $size; $col++) {
+                if ($words[$row][$col] !== 'A') {
+                    continue;
+                }
+
+                if ($this->getXMasCount($col, $row, $size, $words)) {
+                    $answer++;
+                }
+            }
+        }
 
         return $answer;
     }
 
-    private function getXmasCount(string $input): int
+    private function getXMasCount(int $col, int $row, int $size, array $words): bool
     {
-        $total = 0;
-        $pos = 0;
-        $len = strlen($input);
-
-        while (true) {
-            $offset = strpos($input, 'XMAS', $pos);
-            if ($offset !== false) {
-                $total++;
-                $pos += $offset + 4;
-                if ($pos >= $len) {
-                    break;
-                }
-            } else {
-                break;
-            }
+        // We need an M and S at opposite corners
+        // First check boundaries
+        if ($col + 1 >= $size || $col - 1 < 0 || $row + 1 >= $size || $row - 1 < 0) {
+            return 0;
         }
 
-        return $total;
+        if (
+            (
+                ($words[$row-1][$col-1] === 'M' && $words[$row+1][$col+1] === 'S') || ($words[$row-1][$col-1] === 'S' && $words[$row+1][$col+1] === 'M')
+            ) &&
+            (
+                ($words[$row-1][$col+1] === 'S' && $words[$row+1][$col-1] === 'M') || ($words[$row-1][$col+1] === 'M' && $words[$row+1][$col-1] === 'S')
+            )
+        ) {
+            return true;
+        }
+
+        return false;
     }
 }
