@@ -14,14 +14,31 @@ class Day5 implements SolutionInterface
 
     public function part1(string $input): int
     {
+        $results = $this->getResults($input);
         $answer = 0;
+        $lines = $results['lines'];
+
+        foreach ($lines as $line) {
+            if ($line['valid']) {
+                $idx = floor(count($line['numbers']) / 2);
+                $answer += $line['numbers'][$idx];
+            }
+        }
+
+        return $answer;
+    }
+
+    private function getResults(string $input): array
+    {
         $orders = [];
         $lines = [];
+        $part2 = [];
 
         $parts = explode("\n\n", $input);
         foreach (explode("\n", $parts[0]) as $part) {
             $numbers = explode("|", $part);
             $orders[] = [(int) $numbers[0], (int) $numbers[1]];
+            $part2[(int)$numbers[0]][] = (int) $numbers[1];
         }
 
         foreach (explode("\n", $parts[1]) as $part) {
@@ -43,14 +60,11 @@ class Day5 implements SolutionInterface
             unset($line);
         }
 
-        foreach ($lines as $line) {
-            if ($line['valid']) {
-                $idx = floor(count($line['numbers']) / 2);
-                $answer += $line['numbers'][$idx];
-            }
-        }
-
-        return $answer;
+        return [
+            'orders' => $orders,
+            'lines' => $lines,
+            'part2' => $part2,
+        ];
     }
 
     private function isSorted(array $search, array $input): bool
@@ -73,6 +87,29 @@ class Day5 implements SolutionInterface
     public function part2(string $input): int
     {
         $answer = 0;
+        $results = $this->getResults($input);
+        $orders = $results['part2'];
+        foreach ($results['lines'] as $line) {
+            if ($line['valid']) {
+                continue;
+            }
+
+            $arr = $line['numbers'];
+            usort($arr, static function ($a, $b) use ($orders) {
+                if (isset($orders[$a]) && in_array($b, $orders[$a], true)) {
+                    return 1;
+                }
+
+                if (isset($orders[$b]) && in_array($a, $orders[$b], true)) {
+                    return -1;
+                }
+
+                return 0;
+            } );
+
+            $idx = floor(count($arr) / 2);
+            $answer += $arr[$idx];
+        }
 
         return $answer;
     }
