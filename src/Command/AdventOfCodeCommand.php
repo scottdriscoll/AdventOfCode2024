@@ -7,6 +7,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -27,6 +28,7 @@ class AdventOfCodeCommand extends Command
         $this
             ->addArgument('day', InputArgument::REQUIRED, 'Day to run')
             ->addArgument('part', InputArgument::REQUIRED, 'Part to run (1 or 2)')
+            ->addOption('visualize', null, InputOption::VALUE_NONE)
         ;
     }
 
@@ -36,12 +38,13 @@ class AdventOfCodeCommand extends Command
 
         $day = (int) $input->getArgument('day');
         $part = (int) $input->getArgument('part');
+        $visualize = $input->getOption('visualize');
 
         $io->info("Running $day $part...");
 
         $input = file_get_contents(__DIR__ . "/../Solutions/day$day.txt");
 
-        $result = $this->runner->run($day, $part, $input);
+        $result = $this->runner->run($day, $part, $input, $visualize);
 
         $io->success((string) $result->answer);
 

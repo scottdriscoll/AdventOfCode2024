@@ -12,7 +12,7 @@ class Day3 implements SolutionInterface
         return 3;
     }
 
-    public function part1(string $input): int
+    public function part1(string $input, bool $visualize = false): int
     {
         $answer = 0;
         $matches = [];
@@ -29,7 +29,7 @@ class Day3 implements SolutionInterface
         return $answer;
     }
 
-    public function part2(string $input): int
+    public function part2(string $input, bool $visualize = false): int
     {
         $answer = 0;
         $matches = [];

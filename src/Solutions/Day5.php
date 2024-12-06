@@ -12,7 +12,7 @@ class Day5 implements SolutionInterface
         return 5;
     }
 
-    public function part1(string $input): int
+    public function part1(string $input, bool $visualize = false): int
     {
         $results = $this->getResults($input);
         $answer = 0;
@@ -84,7 +84,7 @@ class Day5 implements SolutionInterface
         return ($first < $second) || ($first === -1 || $second === -1);
     }
 
-    public function part2(string $input): int
+    public function part2(string $input, bool $visualize = false): int
     {
         $answer = 0;
         $results = $this->getResults($input);

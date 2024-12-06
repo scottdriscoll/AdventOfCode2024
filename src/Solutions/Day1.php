@@ -12,7 +12,7 @@ class Day1 implements SolutionInterface
         return 1;
     }
 
-    public function part1(string $input): int
+    public function part1(string $input, bool $visualize = false): int
     {
         $firstArray = [];
         $secondArray = [];
@@ -35,7 +35,7 @@ class Day1 implements SolutionInterface
         return $answer;
     }
 
-    public function part2(string $input): int
+    public function part2(string $input, bool $visualize = false): int
     {
         $firstArray = [];
         $secondArray = [];
