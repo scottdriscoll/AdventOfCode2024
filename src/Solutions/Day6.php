@@ -38,21 +38,7 @@ class Day6 implements SolutionInterface
         $grid = [];
         $visited = [];
 
-        foreach (explode("\n", $input) as $line) {
-            $row = str_split($line);
-            if ($player->x === -1) {
-                $pos = strpos($line, '^');
-                if ($pos !== false) {
-                    // Player starting position is now at x,y
-                    $player->x = $pos;
-                    $row[$player->x] = '.';
-                } else {
-                    $player->y++;
-                }
-            }
-
-            $grid[] = $row;
-        }
+        $this->loadBoard($player, $grid, $input);
 
         // Board is a perfect square
         $size = count($grid[0]);
@@ -72,6 +58,25 @@ class Day6 implements SolutionInterface
         }
 
         return $answer;
+    }
+
+    private function loadBoard(Player $player, array &$grid, string $input)
+    {
+        foreach (explode("\n", $input) as $line) {
+            $row = str_split($line);
+            if ($player->x === -1) {
+                $pos = strpos($line, '^');
+                if ($pos !== false) {
+                    // Player starting position is now at x,y
+                    $player->x = $pos;
+                    $row[$player->x] = '.';
+                } else {
+                    $player->y++;
+                }
+            }
+
+            $grid[] = $row;
+        }
     }
 
     private function updatePlayerPosition(Player $player, array $grid, int $size): void
@@ -125,6 +130,56 @@ class Day6 implements SolutionInterface
     public function part2(string $input): int
     {
         $answer = 0;
+        $player = new Player();
+        $grid = [];
+
+        $this->loadBoard($player, $grid, $input);
+        $size = count($grid[0]);
+
+        // Save starting location, we're going to brute force this thing
+        $startX = $player->x;
+        $startY = $player->y;
+
+        // Loop through all cells, looking for a '.', and not the players current position
+        for ($y = 0; $y < $size; $y++) {
+            for ($x = 0; $x < $size; $x++) {
+                if ($grid[$y][$x] === '.' && ($y !== $startY || $x !== $startX)) {
+                    // Reset player
+                    $player->y = $startY;
+                    $player->x = $startX;
+                    $player->direction = Direction::North;
+                    $visited = [];
+
+                    // Place obstacle
+                    $grid[$y][$x] = '#';
+
+                    $break = 0;
+                    while (true) {
+                        if ($break++ === 135250) {
+                            var_dump($visited[$player->y]);
+                            var_dump($player);
+                            echo "\nHit loop limit on $y, $x\n";
+                            exit;
+                        }
+
+                        $this->updatePlayerPosition($player, $grid, $size);
+                        if ($player->direction === Direction::Exit) {
+                            break;
+                        }
+
+                        // check for a loop
+                        if (isset($visited[$player->y][$player->x][$player->direction->name]) && $visited[$player->y][$player->x][$player->direction->name] === true) {
+                            $answer++;
+                            break;
+                        }
+                        $visited[$player->y][$player->x][$player->direction->name] = true;
+                    }
+
+                    // remove obstacle
+                    $grid[$y][$x] = '.';
+                }
+            }
+        }
 
         return $answer;
     }
