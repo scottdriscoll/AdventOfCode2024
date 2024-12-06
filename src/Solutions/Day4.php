@@ -12,7 +12,7 @@ class Day4 implements SolutionInterface
         return 4;
     }
 
-    public function part1(string $input): int
+    public function part1(string $input, bool $visualize = false): int
     {
         $answer = 0;
         $words = [];
@@ -87,7 +87,7 @@ class Day4 implements SolutionInterface
         return $count;
     }
 
-    public function part2(string $input): int
+    public function part2(string $input, bool $visualize = false): int
     {
         $answer = 0;
         $words = [];

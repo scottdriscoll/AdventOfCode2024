@@ -15,7 +15,7 @@ class Day2 implements SolutionInterface
         return 2;
     }
 
-    public function part1(string $input): int
+    public function part1(string $input, bool $visualize = false): int
     {
         $answer = 0;
         foreach (explode("\n", $input) as $row) {
@@ -28,7 +28,7 @@ class Day2 implements SolutionInterface
         return $answer;
     }
 
-    public function part2(string $input): int
+    public function part2(string $input, bool $visualize = false): int
     {
         $answer = 0;
         foreach (explode("\n", $input) as $row) {

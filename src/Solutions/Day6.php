@@ -2,6 +2,9 @@
 
 namespace App\Solutions;
 
+use Intervention\Image\Geometry\Factories\RectangleFactory;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 
 enum Direction
@@ -31,7 +34,7 @@ class Day6 implements SolutionInterface
         return 6;
     }
 
-    public function part1(string $input): int
+    public function part1(string $input, bool $visualize = false): int
     {
         $answer = 0;
         $player = new Player();
@@ -44,10 +47,46 @@ class Day6 implements SolutionInterface
         $size = count($grid[0]);
         $visited[$player->y][$player->x] = true;
 
+        if ($visualize) {
+            $boardSize = $size * 2;
+            $manager = new ImageManager(Driver::class);
+            $sourceImage = $manager->create($boardSize, $boardSize)->fill('ccc');
+            $gridSize = 2;
+            foreach ($grid as $y => $cols) {
+                foreach ($cols as $x => $stuff) {
+                    if ($grid[$y][$x] === '#') {
+                        $sourceImage->drawRectangle($x * $gridSize, $y * $gridSize, function (RectangleFactory $rectangle) use ($gridSize) {
+                            $rectangle->size($gridSize, $gridSize);
+                            $rectangle->background('black');
+                        });
+                    }
+                }
+            }
+
+            $imageCounter = 0;
+            $image = clone $sourceImage;
+            $image->drawRectangle($player->x * $gridSize, $player->y * $gridSize, function (RectangleFactory $rectangle) use ($gridSize) {
+                $rectangle->size($gridSize, $gridSize);
+                $rectangle->background('red');
+            });
+            $image->save("/tmp/images/image$imageCounter.png");
+            $imageCounter++;
+        }
+
         while (true) {
             $this->updatePlayerPosition($player, $grid, $size);
             if ($player->direction === Direction::Exit) {
                 break;
+            }
+
+            if ($visualize) {
+                $image = clone $sourceImage;
+                $image->drawRectangle($player->x * $gridSize, $player->y * $gridSize, function (RectangleFactory $rectangle) use ($gridSize) {
+                    $rectangle->size($gridSize, $gridSize);
+                    $rectangle->background('red');
+                });
+                $image->save("/tmp/images/image$imageCounter.png");
+                $imageCounter++;
             }
 
             $visited[$player->y][$player->x] = true;
@@ -55,6 +94,15 @@ class Day6 implements SolutionInterface
 
         foreach ($visited as $arr) {
             $answer += count($arr);
+        }
+
+        if ($visualize) {
+            $image = $manager->animate(function ($animation) use ($imageCounter) {
+                for ($i = 0; $i < $imageCounter; $i++) {
+                    $animation->add("/tmp/images/image$i.png", .001);
+                }
+            })->setLoops(1);
+            $image->save('/tmp/images/animated.gif');
         }
 
         return $answer;
@@ -127,7 +175,7 @@ class Day6 implements SolutionInterface
         }
     }
 
-    public function part2(string $input): int
+    public function part2(string $input, bool $visualize = false): int
     {
         $answer = 0;
         $player = new Player();
@@ -168,16 +216,9 @@ class Day6 implements SolutionInterface
                     // Place obstacle
                     $grid[$y][$x] = '#';
 
-                    $break = 0;
                     while (true) {
-                        if ($break++ === 135250) {
-                            var_dump($visited[$player->y]);
-                            var_dump($player);
-                            echo "\nHit loop limit on $y, $x\n";
-                            exit;
-                        }
-
                         $this->updatePlayerPosition($player, $grid, $size);
+
                         if ($player->direction === Direction::Exit) {
                             break;
                         }

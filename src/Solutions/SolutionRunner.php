@@ -14,7 +14,7 @@ readonly class SolutionRunner
     ) {
     }
 
-    public function run(int $day, int $part, string $inputData): SolutionModel
+    public function run(int $day, int $part, string $inputData, bool $visualize = false): SolutionModel
     {
         /** @var SolutionInterface $solution */
         $solution = $this->solutions->get(sprintf('day-%s', $day));
@@ -23,9 +23,9 @@ readonly class SolutionRunner
         $stopwatch->start('run');
 
         if ($part === 1) {
-            $answer = $solution->part1($inputData);
+            $answer = $solution->part1($inputData, $visualize);
         } else {
-            $answer = $solution->part2($inputData);
+            $answer = $solution->part2($inputData, $visualize);
         }
 
         return new SolutionModel(
