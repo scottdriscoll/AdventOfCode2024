@@ -132,6 +132,7 @@ class Day6 implements SolutionInterface
         $answer = 0;
         $player = new Player();
         $grid = [];
+        $guaranteeVisit = [];
 
         $this->loadBoard($player, $grid, $input);
         $size = count($grid[0]);
@@ -140,9 +141,23 @@ class Day6 implements SolutionInterface
         $startX = $player->x;
         $startY = $player->y;
 
-        // Loop through all cells, looking for a '.', and not the players current position
-        for ($y = 0; $y < $size; $y++) {
-            for ($x = 0; $x < $size; $x++) {
+        // First solve on the default input so we can get a list of all visited locations
+        // No need to place obstacles at every grid location, we only need to place them
+        // on locations we were guaranteed to have visited.
+
+        // This part takes <2ms
+        $guaranteeVisit[$player->y][$player->x] = true;
+        while (true) {
+            $this->updatePlayerPosition($player, $grid, $size);
+            $guaranteeVisit[$player->y][$player->x] = true;
+            if ($player->direction === Direction::Exit) {
+                break;
+            }
+        }
+
+        // Loop through all guarantee visited cells, looking for a '.', and not the players current position
+        foreach ($guaranteeVisit as $y => $cols) {
+            foreach ($cols as $x => $true) {
                 if ($grid[$y][$x] === '.' && ($y !== $startY || $x !== $startX)) {
                     // Reset player
                     $player->y = $startY;
