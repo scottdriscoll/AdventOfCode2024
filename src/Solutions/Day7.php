@@ -15,6 +15,23 @@ class Day7 implements SolutionInterface
     public function part1(string $input, bool $visualize = false): int
     {
         $answer = 0;
+        $dataArray = $this->parseInput($input);
+
+        foreach ($dataArray as $data) {
+            $check = $data['result'];
+            $values = $data['values'];
+            $first = array_shift($values);
+
+            if ($this->resultMatches($check, $first, $values, ['*', '+'])) {
+                $answer += $check;
+            }
+        }
+
+        return $answer;
+    }
+
+    private function parseInput($input): array
+    {
         $dataArray = [];
 
         foreach (explode("\n", $input) as $line) {
@@ -31,34 +48,25 @@ class Day7 implements SolutionInterface
             ];
         }
 
-        foreach ($dataArray as $data) {
-            $check = $data['result'];
-            $values = $data['values'];
-            $first = array_shift($values);
-
-            if ($this->resultMatches($check, $first, $values)) {
-                $answer += $check;
-            }
-        }
-
-        return $answer;
+        return $dataArray;
     }
 
-    private function resultMatches(int $check, int $value, array $remaining): bool
+    private function resultMatches(int $check, int $value, array $remaining, array $operators): bool
     {
-        static $operators = ['*', '+'];
-
-
         $num = array_shift($remaining);
         foreach ($operators as $operator) {
             $answer = 0;
-            eval('$answer = (int)$value' . $operator . '$num;');
+            if ($operator === '||') {
+                $answer = (int) "$value$num";
+            } else {
+                eval('$answer = (int)$value' . $operator . '$num;');
+            }
             if ($answer === $check && empty($remaining)) {
                 return true;
             }
 
             if (!empty($remaining)) {
-                if ($this->resultMatches($check, $answer, $remaining)) {
+                if ($this->resultMatches($check, $answer, $remaining, $operators)) {
                     return true;
                 }
             }
@@ -70,6 +78,17 @@ class Day7 implements SolutionInterface
     public function part2(string $input, bool $visualize = false): int
     {
         $answer = 0;
+        $dataArray = $this->parseInput($input);
+
+        foreach ($dataArray as $data) {
+            $check = $data['result'];
+            $values = $data['values'];
+            $first = array_shift($values);
+
+            if ($this->resultMatches($check, $first, $values, ['*', '+', '||'])) {
+                $answer += $check;
+            }
+        }
 
         return $answer;
     }

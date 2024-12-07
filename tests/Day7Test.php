@@ -18,10 +18,8 @@ class Day7Test extends TestCase
         $this->assertSame(3749, $this->day7->part1(file_get_contents(__DIR__ . '/fixtures/day7.txt')));
     }
 
-    /*
     public function testPart2(): void
     {
-        $this->assertSame(null, $this->day7->part2(file_get_contents(__DIR__ . '/fixtures/day7.txt')));
+        $this->assertSame(11387, $this->day7->part2(file_get_contents(__DIR__ . '/fixtures/day7.txt')));
     }
-    */
 }
