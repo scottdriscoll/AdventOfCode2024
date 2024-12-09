@@ -19,10 +19,8 @@ class Day9Test extends TestCase
         $this->assertSame(1928, $this->day9->part1('2333133121414131402'));
     }
 
-    /*
     public function testPart2(): void
     {
-        $this->assertSame(null, $this->day9->part2('2333133121414131402'));
+        $this->assertSame(2858, $this->day9->part2('2333133121414131402'));
     }
-    */
 }
