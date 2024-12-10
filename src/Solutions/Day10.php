@@ -14,23 +14,15 @@ class Day10 implements SolutionInterface
 
     public function part1(string $input, bool $visualize = false): int
     {
-        $answer = 0;
-        $grid = $this->parseInput($input);
-        $size = count($grid);
-
-        for ($x = 0; $x < $size; $x++) {
-            for ($y = 0; $y < $size; $y++) {
-                if ($grid[$y][$x] === 0) {
-                    $found = [];
-                    $answer += $this->traverse($grid, $x, $y, $size, 0, $found, true);
-                }
-            }
-        }
-
-        return $answer;
+        return $this->doWork($input, $visualize, true);
     }
 
     public function part2(string $input, bool $visualize = false): int
+    {
+        return $this->doWork($input, $visualize, false);
+    }
+
+    private function doWork(string $input, bool $visualize, bool $track): int
     {
         $answer = 0;
         $grid = $this->parseInput($input);
@@ -40,7 +32,7 @@ class Day10 implements SolutionInterface
             for ($y = 0; $y < $size; $y++) {
                 if ($grid[$y][$x] === 0) {
                     $found = [];
-                    $answer += $this->traverse($grid, $x, $y, $size, 0, $found, false);
+                    $answer += $this->traverse($grid, $x, $y, $size, 0, $found, $track);
                 }
             }
         }
