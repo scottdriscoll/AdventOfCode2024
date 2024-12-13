@@ -111,7 +111,7 @@ class Day6 implements SolutionInterface
     private function loadBoard(Player $player, array &$grid, string $input)
     {
         foreach (explode("\n", $input) as $line) {
-            $row = str_split($line);
+            $row = str_split(trim($line));
             if ($player->x === -1) {
                 $pos = strpos($line, '^');
                 if ($pos !== false) {
