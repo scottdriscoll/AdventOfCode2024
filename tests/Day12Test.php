@@ -22,10 +22,12 @@ class Day12Test extends TestCase
         $this->assertSame(1930, $this->day->part1(file_get_contents(__DIR__ . '/fixtures/day12.txt')));
     }
 
-    /*
     public function testPart2(): void
     {
-        $this->assertSame(null, $this->day->part1(file_get_contents(__DIR__ . '/fixtures/day12.txt')));
+        $this->assertSame(80, $this->day->part2("AAAA\nBBCD\nBBCC\nEEEC"));
+        $this->assertSame(236, $this->day->part2("EEEEE\nEXXXX\nEEEEE\nEXXXX\nEEEEE"));
+        $this->assertSame(436, $this->day->part2("OOOOO\nOXOXO\nOOOOO\nOXOXO\nOOOOO"));
+        $this->assertSame(368, $this->day->part2("AAAAAA\nAAABBA\nAAABBA\nABBAAA\nABBAAA\nAAAAAA"));
+        $this->assertSame(1206, $this->day->part2(file_get_contents(__DIR__ . '/fixtures/day12.txt')));
     }
-    */
 }
